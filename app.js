@@ -466,24 +466,25 @@ function renderDesp() {
             tr.className = isOverdue ? 'bg-red-50' : 'animate-fade-in';
             tr.innerHTML = `
             <td>
-              <div class="tag expense">
+                <div class="tag expense">
                 <i class="fas fa-arrow-down"></i> ${d.nome}
-              </div>
+                </div>
             </td>
+            <td class="text-right text-red-600">${fmtBRL(d.valor)}</td>
             <td>
-              <span style="color: ${isOverdue ? 'var(--danger)' : 'var(--text)'}">
+                <span style="color: ${isOverdue ? 'var(--danger)' : 'var(--text)'}">
                 ${formatDate(d.data)}
                 ${isOverdue ? '<i class="fas fa-exclamation-triangle" style="margin-left: 0.5rem; color: var(--danger);"></i>' : ''}
-              </span>
+                </span>
             </td>
             <td><span class="tag" style="background: rgba(59, 130, 246, 0.1); color: var(--accent-2); border-color: var(--accent-2);">${d.tipo}</span></td>
-            <td class="text-right text-red-600">${fmtBRL(d.valor)}</td>
             <td class="text-right">
-              <button class="btn ghost btn-small danger" onclick="deleteItem('despesa', ${d.id}, this)" title="Excluir">
+                <button class="btn ghost btn-small danger" onclick="deleteItem('despesa', ${d.id}, this)" title="Excluir">
                 <i class="fas fa-trash"></i>
-              </button>
+                </button>
             </td>
-          `;
+            `;
+
             tbody.appendChild(tr);
         });
 }
