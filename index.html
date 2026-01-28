@@ -1,649 +1,670 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>💰 Meu Financeiro Pro - Dashboard Inteligente</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/geo-tz@8.1.4/dist/index.js"></script>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>💰 Meu Financeiro Pro - Dashboard Inteligente</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/geo-tz@8.1.4/dist/index.js"></script>
+    <link rel="stylesheet" href="style.css">
 
-  <!-- Favicon padrão para navegadores -->
-  <link rel="icon" type="image/png" href="icons/icon-192.png" sizes="192x192">
+    <!-- Favicon padrão para navegadores -->
+    <link rel="icon" type="image/png" href="icons/icon-192.png" sizes="192x192">
 
-  <!-- Ícone para Apple Touch (iOS) -->
-  <link rel="apple-touch-icon" href="icons/icon-512.png" sizes="512x512">
+    <!-- Ícone para Apple Touch (iOS) -->
+    <link rel="apple-touch-icon" href="icons/icon-512.png" sizes="512x512">
 
-  <!-- Ícone para PWA e Android -->
-  <link rel="icon" type="image/png" href="icons/icon-512.png" sizes="512x512">
+    <!-- Ícone para PWA e Android -->
+    <link rel="icon" type="image/png" href="icons/icon-512.png" sizes="512x512">
 
-  <!-- Meta tags para melhorar a experiência em dispositivos móveis -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- Meta tags para melhorar a experiência em dispositivos móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 
 <body>
-  <!-- Loading Screen -->
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-  </div>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
 
-  <!-- Navigation Toggle -->  
-  <button class="nav-toggle" id="navToggle">
+    <!-- Navigation Toggle -->
+    <button class="nav-toggle" id="navToggle">
     <i class="fas fa-bars"></i>
   </button>
 
-  <!-- Navigation Overlay -->
-  <div class="nav-overlay" id="navOverlay"></div>
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
 
-  <!-- Side Navigation -->
-  <nav class="side-nav" id="sideNav">
-    <div class="nav-menu">
-      <a href="#" class="nav-item active" data-tab="dashboard">
-        <i class="fas fa-chart-line"></i>
-        Dashboard
-      </a>
-      <a href="#" class="nav-item" data-tab="renda">
-        <i class="fas fa-arrow-up"></i>
-        Renda
-      </a>
-      <a href="#" class="nav-item" data-tab="despesas">
-        <i class="fas fa-arrow-down"></i>
-        Despesas
-      </a>
-      <a href="#" class="nav-item" data-tab="cartoes">
-        <i class="fas fa-credit-card"></i>
-        Cartões
-      </a>
-      <a href="#" class="nav-item" data-tab="metas">
-        <i class="fas fa-bullseye"></i>
-        Metas
-      </a>
-      <a href="#" class="nav-item" data-tab="listas">
-        <i class="fas fa-sticky-note"></i>
-        Post-its
-      </a>
-      <a href="#" class="nav-item" data-tab="relatorios">
-        <i class="fas fa-cog"></i>
-        Configurações
-      </a>
-    </div>
-  </nav>
-
-  <header>
-    <div class="wrap">
-      <div class="header-row">
-        <div class="logo">
-          <i class="fas fa-wallet"></i>
-          Meu Financeiro Pro
+    <!-- Side Navigation -->
+    <nav class="side-nav" id="sideNav">
+        <div class="nav-menu">
+            <a href="#" class="nav-item active" data-tab="dashboard">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+            <a href="#" class="nav-item" data-tab="renda">
+                <i class="fas fa-arrow-up"></i> Renda
+            </a>
+            <a href="#" class="nav-item" data-tab="despesas">
+                <i class="fas fa-arrow-down"></i> Despesas
+            </a>
+            <a href="#" class="nav-item" data-tab="cartoes">
+                <i class="fas fa-credit-card"></i> Cartões
+            </a>
+            <a href="#" class="nav-item" data-tab="metas">
+                <i class="fas fa-bullseye"></i> Metas
+            </a>
+            <a href="#" class="nav-item" data-tab="listas">
+                <i class="fas fa-sticky-note"></i> Post-its
+            </a>
+            <a href="#" class="nav-item" data-tab="relatorios">
+                <i class="fas fa-cog"></i> Configurações
+            </a>
         </div>
-        <div class="header-actions">
-          <div class="period-dropdown">
-            <div class="period-select" id="periodSelect" onclick="togglePeriodList()">
-              <span id="currentPeriodText">Carregando...</span>
-            </div>
-            <div class="period-list" id="periodList"></div>
-          </div>
-          <label class="theme-toggle">
+    </nav>
+
+    <header>
+        <div class="wrap">
+            <div class="header-row">
+                <div class="logo">
+                    <i class="fas fa-wallet"></i> Meu Financeiro Pro
+                </div>
+                <div class="header-actions">
+                    <div class="period-dropdown">
+                        <div class="period-select" id="periodSelect" onclick="togglePeriodList()">
+                            <span id="currentPeriodText">Carregando...</span>
+                        </div>
+                        <div class="period-list" id="periodList"></div>
+                    </div>
+                    <label class="theme-toggle">
             <i id="themeIcon" class="fas fa-sun"></i>
             <input type="checkbox" id="themeToggle">
             <span class="slider"></span>
           </label>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="content-wrapper">
-    <!-- Welcome Screen / Onboarding -->
-    <section id="welcomeScreen" class="welcome-screen animate-fade-in" style="display: none;">
-      <div class="welcome-content">
-        <div class="welcome-icon">
-          <i class="fas fa-rocket"></i>
-        </div>
-        <h1 class="welcome-title">Bem-vindo ao seu Financeiro Inteligente! 🚀</h1>
-        <p class="welcome-subtitle">
-          Vamos configurar seu controle financeiro em 3 passos simples. Você verá seus dados em tempo real assim que terminar!
-        </p>
-        
-        <div class="progress-steps">
-          <div class="step" id="step1">
-            <div class="step-icon">1</div>
-            <span>Adicionar sua primeira renda</span>
-          </div>
-          <div class="step" id="step2">
-            <div class="step-icon">2</div>
-            <span>Registrar uma despesa</span>
-          </div>
-          <div class="step" id="step3">
-            <div class="step-icon">3</div>
-            <span>Definir uma meta</span>
-          </div>
-        </div>
-        
-        <button id="startOnboarding" class="btn success">
+    <main class="content-wrapper">
+        <!-- Welcome Screen / Onboarding -->
+        <section id="welcomeScreen" class="welcome-screen animate-fade-in" style="display: none;">
+            <div class="welcome-content">
+                <div class="welcome-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h1 class="welcome-title">Bem-vindo ao seu Financeiro Inteligente! 🚀</h1>
+                <p class="welcome-subtitle">
+                    Vamos configurar seu controle financeiro em 3 passos simples. Você verá seus dados em tempo real assim que terminar!
+                </p>
+
+                <div class="progress-steps">
+                    <div class="step" id="step1">
+                        <div class="step-icon">1</div>
+                        <span>Adicionar sua primeira renda</span>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-icon">2</div>
+                        <span>Registrar uma despesa</span>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-icon">3</div>
+                        <span>Definir uma meta</span>
+                    </div>
+                </div>
+
+                <button id="startOnboarding" class="btn success">
           <i class="fas fa-play"></i> Começar Agora
         </button>
-        <button id="skipOnboarding" class="skip-onboarding space-top">
+                <button id="skipOnboarding" class="skip-onboarding space-top">
           Pular e ver dados →
         </button>
-      </div>
-    </section>
+            </div>
+        </section>
 
-    <!-- DASHBOARD - Agora como aba normal -->
-    <section id="tab-dashboard" class="tab card animate-fade-in" style="display: none;">
-      <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
-      
-      <!-- KPIs Principais -->
-      <div class="kpi-grid">
-        <div class="kpi-card balance">
-          <div class="kpi-label">Saldo Previsto</div>
-          <div class="kpi-value" id="kpiSaldo">R$ 0,00</div>
-          <div class="text-muted text-small">Total de entradas</div>
-          <div class="kpi-trend">
-            <i class="fas fa-arrow-up"></i>
-            
-          </div>
-        </div>
-        <div class="kpi-card expenses">
-          <div class="kpi-label">Total Despesas</div>
-          <div class="kpi-value" id="kpisomadiv">R$ 0,00</div>
-          <div class="text-muted text-small">Despesas + cartões</div>
-          <div class="kpi-trend">
-            <i class="fas fa-arrow-down"></i>
-          </div>
-        </div>
-        <div class="kpi-card leftover">
-          <div class="kpi-label">Sobra Mensal</div>
-          <div class="kpi-value" id="kpiSobra">R$ 0,00</div>
-          <div class="text-muted text-small">Saldo disponível</div>
-          <div class="kpi-trend" id="kpiTrend">
-            <i class="fas fa-chart-line"></i>
-            <span id="kpiTrendText">Estável</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Informações Rápidas -->
-      <div class="grid" style="grid-template-columns: 1fr;">
-        <div class="card">
-          <h3><i class="fas fa-calendar-alt"></i> Próximo Vencimento</h3>
-          <div id="kpiVencimento" class="text-muted font-bold" style="font-size: 1.1rem;">—</div>
-          <p class="text-small text-muted">Fique de olho nas datas importantes</p>
-        </div>
-      </div>
-    </section>
+        <!-- DASHBOARD - Agora como aba normal -->
+        <section id="tab-dashboard" class="tab card animate-fade-in" style="display: none;">
+            <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
 
-    <!-- RENDA -->
-    <section id="tab-renda" class="tab card animate-fade-in" style="display: none;">
-      <h2><i class="fas fa-arrow-up"></i> Renda</h2>
-      <div class="form-grid">
-        <div class="form-row">
-          <div class="form-group">
-            <label>
+            <!-- KPIs Principais -->
+            <div class="kpi-grid">
+                <div class="kpi-card balance">
+                    <div class="kpi-label">Saldo Previsto</div>
+                    <div class="kpi-value" id="kpiSaldo">R$ 0,00</div>
+                    <div class="text-muted text-small">Total de entradas</div>
+                    <div class="kpi-trend">
+                        <i class="fas fa-arrow-up"></i>
+
+                    </div>
+                </div>
+                <div class="kpi-card expenses">
+                    <div class="kpi-label">Total Despesas</div>
+                    <div class="kpi-value" id="kpisomadiv">R$ 0,00</div>
+                    <div class="text-muted text-small">Despesas + cartões</div>
+                    <div class="kpi-trend">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+                <div class="kpi-card leftover">
+                    <div class="kpi-label">Sobra Mensal</div>
+                    <div class="kpi-value" id="kpiSobra">R$ 0,00</div>
+                    <div class="text-muted text-small">Saldo disponível</div>
+                    <div class="kpi-trend" id="kpiTrend">
+                        <i class="fas fa-chart-line"></i>
+                        <span id="kpiTrendText">Estável</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informações Rápidas -->
+            <div class="grid" style="grid-template-columns: 1fr;">
+                <div class="card">
+                    <h3><i class="fas fa-calendar-alt"></i> Próximo Vencimento</h3>
+                    <div id="kpiVencimento" class="text-muted font-bold" style="font-size: 1.1rem;">—</div>
+                    <p class="text-small text-muted">Fique de olho nas datas importantes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RENDA -->
+        <section id="tab-renda" class="tab card animate-fade-in" style="display: none;">
+            <h2><i class="fas fa-arrow-up"></i> Renda</h2>
+              <button class="fab fab-inline" data-form="renda">
+                  <i class="fas fa-plus"></i>
+              </button>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
               Descrição
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Como funciona</div>
-              <div>Nome da fonte de renda (Salário, Freelance, Aluguel, etc.).</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="rendaNome" placeholder="Salário, Freelance, etc..." required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Como funciona</div>
+                            <div>Nome da fonte de renda (Salário, Freelance, Aluguel, etc.).</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="rendaNome" placeholder="Salário, Freelance, etc..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Valor
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Dica importante</div>
-              <div>Use o valor líquido recebido (após impostos e descontos). Use vírgula para centavos.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="rendaValor" type="number" step="0.01" placeholder="0,00" required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Dica importante</div>
+                            <div>Use o valor líquido recebido (após impostos e descontos). Use vírgula para centavos.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="rendaValor" type="number" step="0.01" placeholder="0,00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Data de Recebimento
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Por que isso importa</div>
-              <div>Data em que o dinheiro realmente entra na conta. Ajuda no planejamento mensal.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="rendaData" type="date" required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Por que isso importa</div>
+                            <div>Data em que o dinheiro realmente entra na conta. Ajuda no planejamento mensal.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="rendaData" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Recorrência
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Automatize seu controle</div>
-              <div>Se é uma renda que se repete regularmente, o sistema criará entradas automáticas para os próximos períodos.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <select id="rendaRecorrente">
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Automatize seu controle</div>
+                            <div>Se é uma renda que se repete regularmente, o sistema criará entradas automáticas para os próximos períodos.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <select id="rendaRecorrente">
               <option value="0">Única vez</option>
               <option value="1">Mensal</option>
               <option value="3">Trimestral</option>
               <option value="6">Semestral</option>
               <option value="12">Anual</option>
             </select>
-          </div>
-          <div class="form-group" style="align-self: end;">
-            <button id="btnAddRenda" class="btn primary">
+                    </div>
+                    <div class="form-group" style="align-self: end;">
+                        <button id="btnAddRenda" class="btn primary">
               <i class="fas fa-plus"></i> Adicionar Renda
             </button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="table-container space-top">
-        <table id="tblRenda">
-          <thead>
-            <tr>
-              <th><i class="fas fa-tag"></i> Descrição</th>
-              <th><i class="fas fa-calendar"></i> Data</th>
-              <th class="text-right"><i class="fas fa-money-bill-wave"></i> Valor</th>
-              <th class="text-right"><i class="fas fa-cog"></i></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      
-      <div id="emptyRenda" class="empty-state">
-        <i class="fas fa-arrow-up"></i>
-        <h3>Nenhuma renda registrada</h3>
-        <p>Adicione sua primeira entrada de renda para começar a ver seu saldo crescer!</p>
-        <button class="empty-action" onclick="document.getElementById('rendaNome').focus()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container space-top">
+                <table id="tblRenda">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-tag"></i> Descrição</th>
+                            <th><i class="fas fa-calendar"></i> Data</th>
+                            <th class="text-right"><i class="fas fa-money-bill-wave"></i> Valor</th>
+                            <th class="text-right"><i class="fas fa-cog"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="emptyRenda" class="empty-state">
+                <i class="fas fa-arrow-up"></i>
+                <h3>Nenhuma renda registrada</h3>
+                <p>Adicione sua primeira entrada de renda para começar a ver seu saldo crescer!</p>
+                <button class="empty-action" onclick="document.getElementById('rendaNome').focus()">
           <i class="fas fa-plus"></i> Adicionar Primeira Renda
         </button>
-      </div>
-    </section>
+            </div>
+        </section>
 
-    <!-- DESPESAS -->
-    <section id="tab-despesas" class="tab card animate-fade-in" style="display: none;">
-      <h2><i class="fas fa-arrow-down"></i> Despesas</h2>
-      <div class="form-grid">
-        <div class="form-row">
-          <div class="form-group">
-            <label>
+        <!-- DESPESAS -->
+        <section id="tab-despesas" class="tab card animate-fade-in" style="display: none;">
+            <h2><i class="fas fa-arrow-down"></i> Despesas</h2>
+            <button class="fab fab-inline" data-form="despesas">
+              <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
               Descrição
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Seja específico</div>
-              <div>O que você gastou (conta de luz, supermercado, Netflix, etc.). Detalhes ajudam na análise.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="despNome" placeholder="Conta de luz, supermercado..." required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Seja específico</div>
+                            <div>O que você gastou (conta de luz, supermercado, Netflix, etc.). Detalhes ajudam na análise.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="despNome" placeholder="Conta de luz, supermercado..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Valor
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Precisão conta</div>
-              <div>Valor exato do gasto. Use vírgula para centavos. Inclua tudo, até os pequenos gastos.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="despValor" type="number" step="0.01" placeholder="0,00" required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Precisão conta</div>
+                            <div>Valor exato do gasto. Use vírgula para centavos. Inclua tudo, até os pequenos gastos.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="despValor" type="number" step="0.01" placeholder="0,00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Vencimento
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Evite multas</div>
-              <div>Data limite para pagamento. O sistema alertará sobre vencimentos próximos para evitar juros.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="despData" type="date" required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Evite multas</div>
+                            <div>Data limite para pagamento. O sistema alertará sobre vencimentos próximos para evitar juros.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="despData" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Categoria
               <button class="help-trigger" type="button" tabindex="-1"> 
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Organize melhor</div>
-              <div>Ajuda a organizar e analisar seus gastos por tipo. Você pode criar novas categorias abaixo.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <select id="despTipo" required></select>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Organize melhor</div>
+                            <div>Ajuda a organizar e analisar seus gastos por tipo. Você pode criar novas categorias abaixo.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <select id="despTipo" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Nova Categoria
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Personalize</div>
-              <div>Crie categorias específicas para seus gastos (ex: "Delivery", "Pet Shop", "Cursos").</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-              <input id="novoTipo" placeholder="Ex: Lazer" style="flex: 1;">
-              <button id="btnAddTipo" class="btn ghost btn-small">
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Personalize</div>
+                            <div>Crie categorias específicas para seus gastos (ex: "Delivery", "Pet Shop", "Cursos").</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input id="novoTipo" placeholder="Ex: Lazer" style="flex: 1;">
+                            <button id="btnAddTipo" class="btn ghost btn-small">
                 <i class="fas fa-plus"></i>
               </button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Recorrência
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Não se preocupe em lembrar</div>
-              <div>Se é um gasto que se repete (aluguel, internet, academia), o sistema criará automaticamente para os próximos meses.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <select id="despRecorrente">
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Não se preocupe em lembrar</div>
+                            <div>Se é um gasto que se repete (aluguel, internet, academia), o sistema criará automaticamente para os próximos meses.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <select id="despRecorrente">
               <option value="0">Única vez</option>
               <option value="1">Mensal</option>
               <option value="3">Trimestral</option>
               <option value="6">Semestral</option>
               <option value="12">Anual</option>
             </select>
-          </div>
-          <div class="form-group" style="align-self: end;">
-            <button id="btnAddDesp" class="btn danger">
+                    </div>
+                    <div class="form-group" style="align-self: end;">
+                        <button id="btnAddDesp" class="btn danger">
               <i class="fas fa-minus"></i> Registrar Despesa
             </button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="table-container space-top">
-        <table id="tblDesp">
-          <thead>
-            <tr>
-              <th><i class="fas fa-tag"></i> Descrição</th>
-              <th class="text-right"><i class="fas fa-money-bill-wave"></i> Valor</th>
-              <th><i class="fas fa-calendar"></i> Data</th>
-              <th><i class="fas fa-folder"></i> Categoria</th>
-              <th class="text-right"><i class="fas fa-cog"></i></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      
-      <div id="emptyDesp" class="empty-state">
-        <i class="fas fa-arrow-down"></i>
-        <h3>Nenhuma despesa registrada</h3>
-        <p>Registre suas despesas para ter controle total do seu orçamento!</p>
-        <button class="empty-action" onclick="document.getElementById('despNome').focus()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container space-top">
+                <table id="tblDesp">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-tag"></i> Descrição</th>
+                            <th class="text-right"><i class="fas fa-money-bill-wave"></i> Valor</th>
+                            <th><i class="fas fa-calendar"></i> Data</th>
+                            <th><i class="fas fa-folder"></i> Categoria</th>
+                            <th class="text-right"><i class="fas fa-cog"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="emptyDesp" class="empty-state">
+                <i class="fas fa-arrow-down"></i>
+                <h3>Nenhuma despesa registrada</h3>
+                <p>Registre suas despesas para ter controle total do seu orçamento!</p>
+                <button class="empty-action" onclick="document.getElementById('despNome').focus()">
           <i class="fas fa-plus"></i> Primeira Despesa
         </button>
-      </div>
-    </section>
+            </div>
+        </section>
 
-    <!-- CARTÕES -->
-    <section id="tab-cartoes" class="tab card animate-fade-in" style="display: none;">
-      <h2><i class="fas fa-credit-card"></i> Cartões</h2>
-      <div class="form-grid">
-        <div class="form-row">
-          <div class="form-group">
-            <label>
+        <!-- CARTÕES -->
+        <section id="tab-cartoes" class="tab card animate-fade-in" style="display: none;">
+            <h2><i class="fas fa-credit-card"></i> Cartões</h2>
+            <button class="fab fab-inline" data-form="cartoes">
+              <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
               Nome do Cartão
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Identifique seu cartão</div>
-              <div>Nome do cartão (Visa, Mastercard, Nubank, Santander, etc.). Ajuda a separar os gastos por cartão.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="ccNome" placeholder="Visa, Mastercard..." required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Identifique seu cartão</div>
+                            <div>Nome do cartão (Visa, Mastercard, Nubank, Santander, etc.). Ajuda a separar os gastos por cartão.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="ccNome" placeholder="Visa, Mastercard..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Vencimento
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Data crítica</div>
-              <div>Data de fechamento da fatura do cartão. Importante para planejar o pagamento mensal.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="ccVenc" type="date" required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Data crítica</div>
+                            <div>Data de fechamento da fatura do cartão. Importante para planejar o pagamento mensal.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="ccVenc" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Valor Gasto
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Controle total</div>
-              <div>Total gasto no cartão neste período. Some todos os gastos para ter visão completa da fatura.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="ccValor" type="number" step="0.01" placeholder="0,00" required>
-          </div>
-          <div class="form-group" style="align-self: end;">
-            <button id="btnAddCC" class="btn primary">
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Controle total</div>
+                            <div>Total gasto no cartão neste período. Some todos os gastos para ter visão completa da fatura.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="ccValor" type="number" step="0.01" placeholder="0,00" required>
+                    </div>
+                    <div class="form-group" style="align-self: end;">
+                        <button id="btnAddCC" class="btn primary">
               <i class="fas fa-plus"></i> Registrar Gasto
             </button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="table-container space-top">
-        <table id="tblCC">
-          <thead>
-            <tr>
-              <th><i class="fas fa-credit-card"></i> Cartão</th>
-              <th><i class="fas fa-calendar"></i> Vencimento</th>
-              <th class="text-right"><i class="fas fa-money-bill-wave"></i> Valor</th>
-              <th class="text-right"><i class="fas fa-cog"></i></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      
-      <div id="emptyCC" class="empty-state">
-        <i class="fas fa-credit-card"></i>
-        <h3>Nenhum cartão registrado</h3>
-        <p>Adicione seus cartões para controle completo dos gastos!</p>
-        <button class="empty-action" onclick="document.getElementById('ccNome').focus()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container space-top">
+                <table id="tblCC">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-credit-card"></i> Cartão</th>
+                            <th><i class="fas fa-calendar"></i> Vencimento</th>
+                            <th class="text-right"><i class="fas fa-money-bill-wave"></i> Valor</th>
+                            <th class="text-right"><i class="fas fa-cog"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="emptyCC" class="empty-state">
+                <i class="fas fa-credit-card"></i>
+                <h3>Nenhum cartão registrado</h3>
+                <p>Adicione seus cartões para controle completo dos gastos!</p>
+                <button class="empty-action" onclick="document.getElementById('ccNome').focus()">
           <i class="fas fa-plus"></i> Primeiro Cartão
         </button>
-      </div>
-    </section>
+            </div>
+        </section>
 
-    <!-- METAS -->
-    <section id="tab-metas" class="tab card animate-fade-in" style="display: none;">
-      <h2><i class="fas fa-bullseye"></i> Metas Financeiras</h2>
-      <div class="form-grid">
-        <div class="form-row">
-          <div class="form-group">
-            <label>
+        <!-- METAS -->
+        <section id="tab-metas" class="tab card animate-fade-in" style="display: none;">
+            <h2><i class="fas fa-bullseye"></i> Metas Financeiras</h2>
+
+            <button class="btn primary space-bottom" id="btnNovaMeta">
+              <i class="fas fa-plus"></i> Nova Meta
+            </button>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
               Objetivo
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Mantenha o foco</div>
-              <div>Para que você está poupando? (Viagem aos EUA, carro novo, fundo de emergência, curso). Seja específico!</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="metaDesc" placeholder="Ex: Novo notebook, Viagem..." required>
-          </div>
-          <div class="form-group">
-            <label>
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Mantenha o foco</div>
+                            <div>Para que você está poupando? (Viagem aos EUA, carro novo, fundo de emergência, curso). Seja específico!</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="metaDesc" placeholder="Ex: Novo notebook, Viagem..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>
               Valor Alvo
               <button class="help-trigger" type="button" tabindex="-1">
                 <i class="fas fa-question-circle"></i>
               </button>
             </label>
-            <div class="help-popup">
-              <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Seja realista</div>
-              <div>Quanto você quer economizar para este objetivo. O sistema mostrará seu progresso em tempo real.</div>
-              <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-            <input id="metaValor" type="number" step="0.01" placeholder="0,00" required>
-          </div>
-          <div class="form-group" style="align-self: end;">
-            <button id="btnAddMeta" class="btn success">
+                        <div class="help-popup">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);">Seja realista</div>
+                            <div>Quanto você quer economizar para este objetivo. O sistema mostrará seu progresso em tempo real.</div>
+                            <div class="help-icon" onclick="this.parentElement.style.display='none'" title="Fechar">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <input id="metaValor" type="number" step="0.01" placeholder="0,00" required>
+                    </div>
+                    <div class="form-group" style="align-self: end;">
+                        <button id="btnAddMeta" class="btn success">
               <i class="fas fa-plus"></i> Criar Meta
             </button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="goals-grid" id="goalsGrid"></div>
-      
-      <div id="emptyMetas" class="empty-state">
-        <i class="fas fa-bullseye"></i>
-        <h3>Nenhuma meta criada</h3>
-        <p>Crie sua primeira meta financeira e acompanhe seu progresso em tempo real!</p>
-        <button class="empty-action" onclick="document.getElementById('metaDesc').focus()">
-          <i class="fas fa-plus"></i> Primeira Meta
-        </button>
-      </div>
-    </section>
+                    </div>
+                </div>
+            </div>
 
-    <!-- POST-ITS -->
-    <section id="tab-listas" class="tab card animate-fade-in" style="display: none;">
-      <div class="notes-header">
-        <h2><i class="fas fa-sticky-note"></i> Post-its & Lembretes</h2>
-        <button id="btnNovaNota" class="btn primary">
+            <div class="goals-grid" id="goalsGrid"></div>
+
+            <div id="emptyMetas" class="empty-state">
+                <i class="fas fa-bullseye"></i>
+                <h3>Nenhuma meta criada</h3>
+                <p>Crie sua primeira meta financeira e acompanhe seu progresso em tempo real!</p>
+                <button class="empty-action" id="btnNovaMetaEmpty">
+                  <i class="fas fa-plus"></i> Criar Meta
+                </button>
+            </div>
+        </section>
+
+        <!-- POST-ITS -->
+        <section id="tab-listas" class="tab card animate-fade-in" style="display: none;">
+            <div class="notes-header">
+                <h2><i class="fas fa-sticky-note"></i> Post-its & Lembretes</h2>
+                <button id="btnNovaNota" class="btn primary">
           <i class="fas fa-plus"></i> Nova Nota
         </button>
-      </div>
-      <div class="notes-grid" id="notesGrid"></div>
-      
-      <div id="emptyNotes" class="empty-state">
-        <i class="fas fa-sticky-note"></i>
-        <h3>Nenhum post-it criado</h3>
-        <p>Crie sua primeira nota para organizar seus pensamentos financeiros!</p>
-        <button class="empty-action" onclick="document.getElementById('btnNovaNota').click()">
+            </div>
+            <div class="notes-grid" id="notesGrid"></div>
+
+            <div id="emptyNotes" class="empty-state">
+                <i class="fas fa-sticky-note"></i>
+                <h3>Nenhum post-it criado</h3>
+                <p>Crie sua primeira nota para organizar seus pensamentos financeiros!</p>
+                <button class="empty-action" onclick="document.getElementById('btnNovaNota').click()">
           <i class="fas fa-plus"></i> Primeira Nota
         </button>
-      </div>
-    </section>
+            </div>
+        </section>
 
-    <!-- CONFIGURAÇÕES -->
-    <section id="tab-relatorios" class="tab card animate-fade-in" style="display: none;">
-      <h2><i class="fas fa-cog"></i> Configurações & Relatórios</h2>
-      
-      <div class="card space-top">
-        <h3><i class="fas fa-chart-pie"></i> Resumo por Categoria</h3>
-        <div id="relatorioCategorias" class="space-top"></div>
-      </div>
-      
-      <div class="card space-top">
-        <h3><i class="fas fa-history"></i> Histórico Mensal</h3>
-        <div id="relatorioHistorico" class="space-top"></div>
-      </div>
-      
-      <div class="card space-top">
-        <h3><i class="fas fa-database"></i> Backup & Exportar</h3>
-        <div class="form-row">
-          <div class="form-group">
-            <button id="btnExport" class="btn primary">
+        <!-- CONFIGURAÇÕES -->
+        <section id="tab-relatorios" class="tab card animate-fade-in" style="display: none;">
+            <h2><i class="fas fa-cog"></i> Configurações & Relatórios</h2>
+
+            <div class="card space-top">
+                <h3><i class="fas fa-chart-pie"></i> Resumo por Categoria</h3>
+                <div id="relatorioCategorias" class="space-top"></div>
+            </div>
+
+            <div class="card space-top">
+                <h3><i class="fas fa-history"></i> Histórico Mensal</h3>
+                <div id="relatorioHistorico" class="space-top"></div>
+            </div>
+
+            <div class="card space-top">
+                <h3><i class="fas fa-database"></i> Backup & Exportar</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <button id="btnExport" class="btn primary">
               <i class="fas fa-download"></i> Exportar Dados
             </button>
-          </div>
-          <div class="form-group">
-            <button id="btnImport" class="btn ghost">
+                    </div>
+                    <div class="form-group">
+                        <button id="btnImport" class="btn ghost">
               <i class="fas fa-upload"></i> Importar Dados
             </button>
-          </div>
-        </div>
-        <input type="file" id="fileImport" accept=".json" style="display: none;">
-      </div>
-      
-      <div class="card space-top">
-        <h3><i class="fas fa-trash-alt"></i> Limpar Dados</h3>
-        <button id="btnReset" class="btn danger space-top">
+                    </div>
+                </div>
+                <input type="file" id="fileImport" accept=".json" style="display: none;">
+            </div>
+
+            <div class="card space-top">
+                <h3><i class="fas fa-trash-alt"></i> Limpar Dados</h3>
+                <button id="btnReset" class="btn danger space-top">
           <i class="fas fa-exclamation-triangle"></i> Resetar Tudo
         </button>
-        <p class="text-small text-muted space-top">
-          Isso apagará todos os dados salvos no seu dispositivo
-        </p>
-      </div>
-      <div class="card space-top">
-        <h3><i class="fa-solid fa-registered-alt"></i>Criado por Matheus Oliveira| 2025</h3>
-      </div>
-    </section>
-  </main>
-  <script src="app.js"></script>
+                <p class="text-small text-muted space-top">
+                    Isso apagará todos os dados salvos no seu dispositivo
+                </p>
+            </div>
+            <div class="card space-top">
+                <h3><i class="fa-solid fa-registered-alt"></i>Criado por Matheus Oliveira| 2025</h3>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+
+    <!-- MODAL FLUTUANTE -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Adicionar</h3>
+                <button class="modal-close" id="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+            </div>
+
+            <!-- AQUI VÃO OS FORMS EXISTENTES -->
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>
-
-
-
-
-
-
-
-
