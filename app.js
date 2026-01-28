@@ -104,7 +104,8 @@ function renderPeriods() {
     }
 
     // Ordena com mês atual primeiro, depois decrescente
-    const sortedPeriods = [currentPeriod, ...periods.filter(p => p !== currentPeriod).sort((a, b) => b.localeCompare(a))];
+    const sortedPeriods = periods.sort((a, b) => a.localeCompare(b));
+
 
     // Atualiza texto do período atual
     const [year, month] = currentPeriod.split('-');
@@ -377,8 +378,7 @@ document.getElementById('btnAddTipo').onclick = () => {
         document.getElementById('novoTipo').value = '';
         saveState(false);
         renderTipos();
-    } else if (novoTipo) {
-    }
+    } else if (novoTipo) { }
 };
 
 // ======= Enhanced Despesas - CORRIGIDO RECORRÊNCIA =======
@@ -630,41 +630,36 @@ function renderDashboard() {
     const futuros = eventos.filter(e => e.data >= todayStr());
     futuros.sort((a, b) => a.data.localeCompare(b.data));
 
-    const proximo = futuros.length > 0
-        ? `${formatDate(futuros[0].data)} - ${futuros[0].nome} (${futuros[0].tipo})`
-        : 'Nenhum vencimento futuro';
+    const proximo = futuros.length > 0 ?
+        `${formatDate(futuros[0].data)} - ${futuros[0].nome} (${futuros[0].tipo})` :
+        'Nenhum vencimento futuro';
 
     document.getElementById('kpiVencimento').textContent = proximo;
 }
 
 // ======= Enhanced Metas =======
 function addMeta() {
-    const desc = document.getElementById('metaDesc').value.trim();
-    const alvo = parseN(document.getElementById('metaValor').value);
+  const desc = document.getElementById('metaDesc').value.trim();
+  const alvo = parseN(document.getElementById('metaValor').value);
 
-    if (!desc || !alvo) {
-        return;
-    }
+  if (!desc || !alvo || alvo <= 0) return;
 
-    if (alvo <= 0) {
-        return;
-    }
+  const meta = {
+    id: Date.now() + Math.random(),
+    desc,
+    alvo,
+    acumulado: 0,
+    created: new Date().toISOString(),
+    tags: []
+  };
 
-    const meta = {
-        id: Date.now() + Math.random(),
-        desc,
-        alvo,
-        acumulado: 0,
-        created: new Date().toISOString(),
-        tags: []
-    };
+  state.metas.push(meta);
 
-    state.metas.push(meta);
-    document.getElementById('metaDesc').value = '';
-    document.getElementById('metaValor').value = '';
+  document.getElementById('metaDesc').value = '';
+  document.getElementById('metaValor').value = '';
 
-    trackOnboardingProgress('add-meta');
-    saveState(false);
+  saveState(false);
+  renderMetas(); // 🔥 FORÇA UPDATE VISUAL
 }
 
 document.getElementById('btnAddMeta').onclick = addMeta;
@@ -749,6 +744,8 @@ function updateMeta(id, isAdd, button) {
 
     input.value = '';
     saveState(false);
+    renderMetas(); // 🔥 ATUALIZA PROGRESSO E CARD
+
 }
 
 function deleteMeta(id) {
@@ -1061,8 +1058,7 @@ document.getElementById('fileImport').onchange = (e) => {
                 saveState(false);
                 renderAll();
             }
-        } catch (err) {
-        }
+        } catch (err) { }
     };
     reader.readAsText(file);
 };
@@ -1229,8 +1225,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Welcome message for returning users
     if (onboardingCompleted && !state.stats.firstUse) {
-        setTimeout(() => {
-        }, 1500);
+        setTimeout(() => { }, 1500);
     }
 
     // Initialize notes
@@ -1259,3 +1254,63 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('SW registration failed'));
     });
 }
+document.addEventListener('DOMContentLoaded', () => {
+
+  const modal = document.getElementById('modalOverlay');
+  const modalContent = document.getElementById('modalContent');
+  const modalTitle = document.getElementById('modalTitle');
+  const closeModal = document.getElementById('closeModal');
+
+  let currentForm = null;
+  let originalParent = null;
+
+  document.querySelectorAll('.fab-inline').forEach(btn => {
+    btn.addEventListener('click', () => {
+
+      const tab = btn.closest('.tab');
+      if (!tab) return;
+
+      currentForm = tab.querySelector('.form-grid');
+      if (!currentForm) return;
+
+      originalParent = currentForm.parentElement;
+
+      if (btn.dataset.form === 'renda') modalTitle.textContent = 'Adicionar Renda';
+      if (btn.dataset.form === 'despesas') modalTitle.textContent = 'Adicionar Despesa';
+      if (btn.dataset.form === 'cartoes') modalTitle.textContent = 'Adicionar Cartão';
+
+      modalContent.appendChild(currentForm);
+      currentForm.style.display = 'grid';
+
+      modal.classList.add('show');
+    });
+  });
+
+  closeModal.addEventListener('click', () => {
+    modal.classList.remove('show');
+
+    if (currentForm && originalParent) {
+      originalParent.prepend(currentForm);
+      currentForm.style.display = 'none';
+      currentForm = null;
+      originalParent = null;
+    }
+  });
+
+});
+
+function abrirFormularioMeta() {
+  const form = document.querySelector('#tab-metas .form-grid');
+  if (!form) return;
+
+  form.style.display = 'grid';
+
+  // foco no primeiro campo
+  const firstInput = form.querySelector('input, textarea');
+  firstInput?.focus();
+}
+
+document.getElementById('btnNovaMeta')?.addEventListener('click', abrirFormularioMeta);
+document.getElementById('btnNovaMetaEmpty')?.addEventListener('click', abrirFormularioMeta);
+
+form.classList.add('show');
